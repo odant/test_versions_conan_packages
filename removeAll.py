@@ -7,4 +7,4 @@ def removeAll(p):
     if path.is_file():
         path.unlink()
     else:
-        tools.rmdir(path)
+        tools.rmdir(str(path))
