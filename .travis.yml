@@ -2,7 +2,7 @@ env:
   global:
     Label: Taisia is beautiful
 
-linux: &linux_build
+linux:
   os: linux
   dist: xenial
   sudo: false
