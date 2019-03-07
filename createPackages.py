@@ -7,3 +7,7 @@ def conanInit():
     out = subprocess.check_output(["conan", "user"], universal_newlines=True)
     print(out)
 
+
+def conanCreate(folder, version, user_channel):
+    pass
+

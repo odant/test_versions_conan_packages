@@ -27,5 +27,16 @@ class Test_conanInit(unittest.TestCase):
         self.assertTrue((conanHome / ".conan" / "registry.json").is_file())
 
 
+class Test_conanCreate(unittest.TestCase):
+    def setUp(self):
+        removeAll(conanHome)
+        conanHome.mkdir()
+        with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
+            createPackages.conanInit()
+
+    def test_fake(self):
+        pass
+
+
 if __name__ == "__main__":
     unittest.main()
