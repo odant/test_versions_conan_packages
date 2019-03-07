@@ -2,8 +2,9 @@
 
 
 import unittest
-from removeAll import removeAll
 from pathlib import Path
+
+from removeAll import removeAll
 
 
 currentDir = Path.cwd()
