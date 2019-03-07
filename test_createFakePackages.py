@@ -6,36 +6,32 @@ from removeAll import removeAll
 from pathlib import Path
 from conans import tools
 
-import createPackages
+from createPackages import conanInit, conanCreate, conanSearch
 
 
 currentDir = Path.cwd()
 conanHome = currentDir / "FAKE_CONAN_HOME"
 
 
-class Test_conanInit(unittest.TestCase):
+class Test_createPackages(unittest.TestCase):
 
     def setUp(self):
         removeAll(conanHome)
         conanHome.mkdir()
 
-    def test_conanInit(self):
+    def test_1_conanInit(self):
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
-            createPackages.conanInit()
+            conanInit()
         self.assertTrue((conanHome / ".conan").is_dir())
         self.assertTrue((conanHome / ".conan" / "conan.conf").is_file())
         self.assertTrue((conanHome / ".conan" / "registry.json").is_file())
 
-
-class Test_conanCreate(unittest.TestCase):
-    def setUp(self):
-        removeAll(conanHome)
-        conanHome.mkdir()
+    def test_2_conanCreate(self):
+        recipeDir = currentDir / "fake_openssl"
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
-            createPackages.conanInit()
-
-    def test_fake(self):
-        pass
+            conanInit()
+            conanCreate(folder=currentDir, name="fake_openssl", version="1.1.0", user_channel="odant/testing")
+            conanSearch("fake_openssl/1.1.0@odant/testing")
 
 
 if __name__ == "__main__":
