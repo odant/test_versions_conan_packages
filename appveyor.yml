@@ -1,0 +1,16 @@
+skip_tags: true
+
+environment:
+  Label: Taisia is beautiful
+  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+  PYTHON: C:\\Python37-x64
+
+install:
+  - set PATH=%PYTHON%;%PYTHON%\\Scripts\\;%PATH%
+  - pip install conan
+  - pip install nose2
+
+build: false
+
+test_script:
+  - nose2 -v
