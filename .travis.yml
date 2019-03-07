@@ -10,6 +10,7 @@ linux:
   python: 3.7
 
 install:
+  - python --version
   - pip install conan
   - pip install nose2
 
