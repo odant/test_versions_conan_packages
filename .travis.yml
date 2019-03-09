@@ -2,12 +2,11 @@ env:
   global:
     Label: Taisia is beautiful
 
-linux:
-  os: linux
-  dist: xenial
-  sudo: false
-  language: python
-  python: 3.6
+os: linux
+dist: xenial
+sudo: false
+language: python
+python: 3.6
 
 install:
   - python --version
@@ -16,3 +15,4 @@ install:
 
 script:
   - nose2 -v
+
