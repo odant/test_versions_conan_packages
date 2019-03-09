@@ -7,6 +7,7 @@ environment:
 
 install:
   - set PATH=%PYTHON%;%PYTHON%\\Scripts\\;%PATH%
+  - python --version
   - pip install conan
   - pip install nose2
 
