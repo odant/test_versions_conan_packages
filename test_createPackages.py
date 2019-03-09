@@ -6,7 +6,7 @@ from removeAll import removeAll
 from pathlib import Path
 from conans import tools
 
-from createPackages import conanInit, conanCreate, conanSearch
+from createPackages import conanInit, conanCreate
 
 
 currentDir = Path.cwd()
