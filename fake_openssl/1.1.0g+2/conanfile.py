@@ -3,7 +3,7 @@ from conans import ConanFile
 
 class FakeOpenSSLConan(ConanFile):
     name = "fake_openssl"
-    version = "1.1.0"
+    version = "1.1.0g+2"
     license = "MIT"
     url = "https://github.com/odant/test_versions_conan_packages"
     discreption = "Select version Conan packages"
