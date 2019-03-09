@@ -30,8 +30,9 @@ class Test_createPackages(unittest.TestCase):
         recipeDir = currentDir / "fake_openssl"
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
             conanInit()
-            conanCreate(folder=currentDir, name="fake_openssl", version="1.1.0", user_channel="odant/testing")
-            conanSearch("fake_openssl/1.1.0@odant/testing")
+            packageHash = conanCreate(folder=currentDir, name="fake_openssl", version="1.1.0", user_channel="odant/testing")
+            conaninfoPath = conanHome / ".conan" / "data" / "fake_openssl" / "1.1.0" / "odant" / "testing" / "package" / packageHash / "conaninfo.txt"
+            self.assertTrue(conaninfoPath.is_file())
 
 
 if __name__ == "__main__":
