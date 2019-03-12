@@ -105,3 +105,4 @@ ENV/
 *.png
 
 FAKE_CONAN_HOME/
+project_with_explicit_fake_openssl/
