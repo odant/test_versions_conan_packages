@@ -27,7 +27,6 @@ class Test_createPackages(unittest.TestCase):
         self.assertTrue((conanHome / ".conan" / "registry.json").is_file())
 
     def test_2_conanCreate(self):
-        recipeDir = currentDir / "fake_openssl"
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
             conanInit()
             packageHash = conanCreate(folder=currentDir, name="fake_openssl", version="1.1.0", user_channel="odant/testing")
@@ -38,6 +37,14 @@ class Test_createPackages(unittest.TestCase):
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
             conanInit()
             createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
+
+    def test_4_conanCreate_fake_jscript(self):
+        with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
+            conanInit()
+            createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
+            packageHash = conanCreate(folder=currentDir, name="fake_jscript", version="11.11.0.1", user_channel="odant/testing")
+            conaninfoPath = conanHome / ".conan" / "data" / "fake_jscript" / "11.11.0.1" / "odant" / "testing" / "package" / packageHash / "conaninfo.txt"
+            self.assertTrue(conaninfoPath.is_file())
 
 
 if __name__ == "__main__":

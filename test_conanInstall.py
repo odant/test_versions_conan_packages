@@ -7,7 +7,7 @@ from pathlib import Path
 from conans import tools
 from configparser import ConfigParser
 
-from createPackages import conanInit, createFakeOpenSSL
+from createPackages import conanInit, conanCreate, createFakeOpenSSL
 from conanInstall import conanInstall
 
 
@@ -15,7 +15,7 @@ currentDir = Path.cwd()
 conanHome = currentDir / "FAKE_CONAN_HOME"
 
 
-class Test_createPackages(unittest.TestCase):
+class Test_conanInstall(unittest.TestCase):
 
     def setUp(self):
         removeAll(conanHome)
@@ -37,6 +37,27 @@ class Test_createPackages(unittest.TestCase):
             requires = [i for i in conaninfo["full_requires"]]
             print("Full requires: ", requires)
             self.assertEqual(requires[0], "fake_openssl/1.1.0g+13@odant/testing")
+
+    def test_2_conanInstall_project_with_fake_jscript(self):
+        with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
+            conanInit()
+            createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
+            conanCreate(folder=currentDir, name="fake_jscript", version="11.11.0.1", user_channel="odant/testing")
+            project = "project_with_fake_jscript"
+            installDir = currentDir / project;
+            removeAll(installDir)
+            installDir.mkdir();
+            conanInstall(conanfile=(currentDir / (project + ".py")), installFolder=installDir)
+            conaninfoPath = installDir / "conaninfo.txt"
+            self.assertTrue(conaninfoPath.is_file())
+            conaninfo = ConfigParser(allow_no_value=True)
+            conaninfo.read(conaninfoPath)
+            requires = [i for i in conaninfo["full_requires"]]
+            requires.sort()
+            print("Full requires: ", requires)
+            normalRequires = ["fake_jscript/11.11.0.1@odant/testing", "fake_openssl/1.1.1b+5@odant/testing"]
+            normalRequires.sort()
+            self.assertEqual(requires, normalRequires)
 
 
 if __name__ == "__main__":
