@@ -35,7 +35,6 @@ class Test_createPackages(unittest.TestCase):
             self.assertTrue(conaninfoPath.is_file())
 
     def test_3_createFakeOpenSSL(self):
-        recipeDir = currentDir / "fake_openssl"
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
             conanInit()
             createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
