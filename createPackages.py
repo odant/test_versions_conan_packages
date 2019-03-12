@@ -23,6 +23,7 @@ def conanCreate(folder, name, version, user_channel):
     out = subprocess.check_output(cmd, universal_newlines=True)
     print(out)
     lastString = out.split("\n")[-2]
+    version = version.replace("+", "\+")
     pattern = "^(%s/%s@%s:\sPackage)\s'([0-9a-f]+)'\screated" % (name, version, user_channel)
     res = re.match(pattern, lastString)
     packageHash = res.group(2)
@@ -35,3 +36,10 @@ def conanSearch(request):
     print("Runing '%s' ..." % " ".join(cmd))
     out = subprocess.check_output(cmd, universal_newlines=True)
     print(out)
+
+
+def createFakeOpenSSL(folder, user_channel):
+    path = Path(folder) / "fake_openssl"
+    for p in path.iterdir():
+        version = str(p.name)
+        conanCreate(folder, "fake_openssl", version, user_channel)

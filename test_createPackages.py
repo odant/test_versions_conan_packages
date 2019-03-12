@@ -6,7 +6,7 @@ from removeAll import removeAll
 from pathlib import Path
 from conans import tools
 
-from createPackages import conanInit, conanCreate
+from createPackages import conanInit, conanCreate, createFakeOpenSSL
 
 
 currentDir = Path.cwd()
@@ -33,6 +33,12 @@ class Test_createPackages(unittest.TestCase):
             packageHash = conanCreate(folder=currentDir, name="fake_openssl", version="1.1.0", user_channel="odant/testing")
             conaninfoPath = conanHome / ".conan" / "data" / "fake_openssl" / "1.1.0" / "odant" / "testing" / "package" / packageHash / "conaninfo.txt"
             self.assertTrue(conaninfoPath.is_file())
+
+    def test_3_createFakeOpenSSL(self):
+        recipeDir = currentDir / "fake_openssl"
+        with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
+            conanInit()
+            createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
 
 
 if __name__ == "__main__":
