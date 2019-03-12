@@ -59,6 +59,28 @@ class Test_conanInstall(unittest.TestCase):
             normalRequires.sort()
             self.assertEqual(requires, normalRequires)
 
+    def test_3_conanInstall_with_override_channel(self):
+        with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):
+            conanInit()
+            createFakeOpenSSL(folder=currentDir, user_channel="odant/testing")
+            conanCreate(folder=currentDir, name="fake_openssl", version="1.1.1a", user_channel="odant/stable")
+            conanCreate(folder=currentDir, name="fake_jscript", version="11.11.0.2", user_channel="odant/stable")
+            project = "project_with_override_channel"
+            installDir = currentDir / project;
+            removeAll(installDir)
+            installDir.mkdir();
+            conanInstall(conanfile=(currentDir / (project + ".py")), installFolder=installDir)
+            conaninfoPath = installDir / "conaninfo.txt"
+            self.assertTrue(conaninfoPath.is_file())
+            conaninfo = ConfigParser(allow_no_value=True)
+            conaninfo.read(conaninfoPath)
+            requires = [i for i in conaninfo["full_requires"]]
+            requires.sort()
+            print("Full requires: ", requires)
+            normalRequires = ["fake_jscript/11.11.0.2@odant/stable", "fake_openssl/1.1.1b+5@odant/testing"]
+            normalRequires.sort()
+            self.assertEqual(requires, normalRequires)
+
 
 if __name__ == "__main__":
     unittest.main()
