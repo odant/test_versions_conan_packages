@@ -33,7 +33,7 @@ class Test_conanInstall(unittest.TestCase):
             conaninfoPath = installDir / "conaninfo.txt"
             self.assertTrue(conaninfoPath.is_file())
             conaninfo = ConfigParser(allow_no_value=True)
-            conaninfo.read(conaninfoPath)
+            conaninfo.read(str(conaninfoPath))
             requires = [i for i in conaninfo["full_requires"]]
             print("Full requires: ", requires)
             self.assertEqual(requires[0], "fake_openssl/1.1.0g+13@odant/testing")
@@ -51,7 +51,7 @@ class Test_conanInstall(unittest.TestCase):
             conaninfoPath = installDir / "conaninfo.txt"
             self.assertTrue(conaninfoPath.is_file())
             conaninfo = ConfigParser(allow_no_value=True)
-            conaninfo.read(conaninfoPath)
+            conaninfo.read(str(conaninfoPath))
             requires = [i for i in conaninfo["full_requires"]]
             requires.sort()
             print("Full requires: ", requires)
@@ -73,7 +73,7 @@ class Test_conanInstall(unittest.TestCase):
             conaninfoPath = installDir / "conaninfo.txt"
             self.assertTrue(conaninfoPath.is_file())
             conaninfo = ConfigParser(allow_no_value=True)
-            conaninfo.read(conaninfoPath)
+            conaninfo.read(str(conaninfoPath))
             requires = [i for i in conaninfo["full_requires"]]
             requires.sort()
             print("Full requires: ", requires)
