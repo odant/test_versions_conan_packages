@@ -1,12 +1,11 @@
-import subprocess
 from pathlib import Path
+from conanRunner import conanRunner
 
 
 def conanInstall(conanfile, installFolder):
     print("\n")
     conanfile = str(conanfile)
     installFolder = str(installFolder)
-    cmd = ["conan", "install", conanfile, "--install-folder", installFolder]
-    print("Runing '%s' ..." % " ".join(cmd))
-    out = subprocess.check_output(cmd, universal_newlines=True)
-    print(out)
+    args = ["install", conanfile, "--install-folder", installFolder]
+    for s in conanRunner(args):
+        print(s)

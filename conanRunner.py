@@ -5,7 +5,7 @@ from conans.util.files import decode_text
 def conanRunner(args = []):
     cmd = ["conan"]
     cmd.extend(args)
-    print("Run ", " ".join(args))
+    print("Runing: ", " ".join(cmd))
     proc = Popen(cmd, stdout=PIPE, stderr=STDOUT)
     result = []
     while True:

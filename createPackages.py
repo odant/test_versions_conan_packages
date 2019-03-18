@@ -1,28 +1,24 @@
-import subprocess
 from pathlib import Path
+from conanRunner import conanRunner
 import re
 
 
 def conanInit():
     print("\n")
-    cmd = ["conan", "user"]
-    print("Runing '%s' ..." % " ".join(cmd))
-    out = subprocess.check_output(cmd, universal_newlines=True)
-    print(out)
-    cmd = ["conan", "profile", "new", "default", "--detect"]
-    print("Runing '%s' ..." % " ".join(cmd))
-    out = subprocess.check_output(cmd, universal_newlines=True)
-    print(out)
+    for s in conanRunner(["user"]):
+        print(s)
+    for s in conanRunner(["profile", "new", "default", "--detect"]):
+        print(s)
 
 
 def conanCreate(folder, name, version, user_channel):
     print("\n")
     recipeDir = str(Path(folder) / name / version)
-    cmd = ["conan", "create", recipeDir, user_channel]
-    print("Runing '%s' ..." % " ".join(cmd))
-    out = subprocess.check_output(cmd, universal_newlines=True)
-    print(out)
-    lastString = out.split("\n")[-2]
+    args = ["create", recipeDir, user_channel]
+    res = conanRunner(args)
+    for s in res:
+        print(s)
+    lastString = res[-1]
     version = version.replace("+", "\+")
     pattern = "^(%s/%s@%s:\sPackage)\s'([0-9a-f]+)'\screated" % (name, version, user_channel)
     res = re.match(pattern, lastString)
@@ -32,10 +28,8 @@ def conanCreate(folder, name, version, user_channel):
 
 def conanSearch(request):
     print("\n")
-    cmd = ["conan", "search", request]
-    print("Runing '%s' ..." % " ".join(cmd))
-    out = subprocess.check_output(cmd, universal_newlines=True)
-    print(out)
+    for s in conanRunner(["user"]):
+        print(s)
 
 
 def createFakeOpenSSL(folder, user_channel):
