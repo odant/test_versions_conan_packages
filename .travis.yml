@@ -1,12 +1,15 @@
 env:
   global:
-    Label: Taisia is beautiful
+    Label: "Taisia is beautiful"
 
 os: linux
 dist: xenial
 sudo: false
 language: python
-python: 3.6
+python:
+  - 3.5
+  - 3.6
+  - 3.7
 
 install:
   - python --version

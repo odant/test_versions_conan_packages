@@ -1,9 +1,13 @@
 skip_tags: true
 
 environment:
-  Label: Taisia is beautiful
+  Label: "Taisia is beautiful"
   APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-  PYTHON: C:\\Python37-x64
+
+  matrix:
+    - PYTHON: C:\\Python35-x64
+    - PYTHON: C:\\Python36-x64
+    - PYTHON: C:\\Python37-x64
 
 install:
   - set PATH=%PYTHON%;%PYTHON%\\Scripts\\;%PATH%
