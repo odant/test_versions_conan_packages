@@ -105,6 +105,5 @@ ENV/
 *.png
 
 FAKE_CONAN_HOME/
-project_with_explicit_fake_openssl/
-project_with_fake_jscript/
-project_with_override_channel/
+project_with_*/
+
