@@ -24,7 +24,6 @@ class Test_createPackages(unittest.TestCase):
             conanInit()
         self.assertTrue((conanHome / ".conan").is_dir())
         self.assertTrue((conanHome / ".conan" / "conan.conf").is_file())
-        self.assertTrue((conanHome / ".conan" / "registry.json").is_file())
 
     def test_2_conanCreate(self):
         with tools.environment_append({"CONAN_USER_HOME": str(conanHome)}):

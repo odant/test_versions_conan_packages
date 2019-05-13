@@ -18,10 +18,10 @@ def conanCreate(folder, name, version, user_channel):
     res = conanRunner(args)
     for s in res:
         print(s)
-    lastString = res[-1]
+    hashString = res[-2]
     version = version.replace("+", "\+")
     pattern = "^(%s/%s@%s:\sPackage)\s'([0-9a-f]+)'\screated" % (name, version, user_channel)
-    res = re.match(pattern, lastString)
+    res = re.match(pattern, hashString)
     packageHash = res.group(2)
     return packageHash
 
